@@ -17,4 +17,20 @@ public class Apple {
     public void setColor(String color) {
         this.color = color;
     }
+
+    public Apple(String color, Integer weight) {
+        this.color = color;
+        this.weight = weight;
+    }
+
+    public Apple() {
+    }
+
+    @Override
+    public String toString() {
+        return "Apple{" +
+                "color='" + color + '\'' +
+                ", weight=" + weight +
+                '}';
+    }
 }
