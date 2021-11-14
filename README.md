@@ -24,3 +24,22 @@
 使用函数式接口的时候必须要加上定义泛型的类型，其他的接口同样<br>
 通过实践证明Predicate这种函数式接口的变量名即函数式接口的实现类名不可以和其他的变量名冲突<br>
 
+# 第三章
+
+### 一些概念
+*流* 是JavaAPI的新成员，它允许以声明性的方式处理数据的集合<br>
+filter接受一个lambda，从流中排除一些元素<br>
+limit截断流，使其元素不能超过给定的数量<br>
+collect 将流转换为其他的形式<br>
+终端操作是从流的流水线上生成结果,其结果是任何不是流的值，比如List、Integer甚至是void<br>
+所有的中间操作都会生成一个Stream<br>
+中间操作有:<br>
+filter map limit sorted distinct<br>
+终端操作:<br>
+forEach count collect <br>
+
+### 注意点
+流只能被消费一次<br>
+limit有一种能够短路的技巧<br>
+
+
