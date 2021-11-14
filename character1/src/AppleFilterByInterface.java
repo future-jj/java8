@@ -71,9 +71,6 @@ public class AppleFilterByInterface<T> {
         inventory.sort((Apple a1,Apple a2)->a1.getWeight().compareTo(a2.getWeight()));
         System.out.println(inventory);
 
-
-
-
     }
 
 }
