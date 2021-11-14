@@ -1,5 +1,8 @@
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
+import java.util.function.BiFunction;
 import java.util.function.BiPredicate;
 import java.util.function.Function;
 import java.util.function.Supplier;
@@ -38,7 +41,34 @@ public class ReferenceLambda {
         Function<Integer,Apple> c3=Apple::new;
         System.out.println(c3.apply(120));
 
+        List<Integer> weights=Arrays.asList(1,3,5,189,90);
+        List<Apple> apples=map(weights,Apple::new);
+        System.out.println(apples);
 
+        //具有两个参数的构造函数
+        BiFunction<String,Integer,Apple> c4=Apple::new;
+        System.out.println(c4.apply("green", 110));
+
+        List<Apple> inventory=new ArrayList<>();
+        inventory=Arrays.asList(new Apple("green",123),new Apple("red",123),new Apple("green",89));
+        inventory.sort(Comparator.comparing(Apple::getWeight).reversed());//按照重量的递减进行排序
+        System.out.println(inventory);
+
+        //比较器链
+        inventory.sort(Comparator.comparing(Apple::getWeight)
+                .reversed()
+                .thenComparing(Apple::getColor));
+        System.out.println(inventory);
+
+        //谓词复合
+
+    }
+    public static List<Apple> map(List<Integer> list, Function<Integer,Apple> f){
+        List<Apple> result=new ArrayList<>();
+        for(Integer e:list){
+            result.add(f.apply(e));
+        }
+        return result;
     }
 
 
