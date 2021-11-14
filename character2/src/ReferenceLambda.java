@@ -2,23 +2,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
-import java.util.function.BiFunction;
-import java.util.function.BiPredicate;
-import java.util.function.Function;
-import java.util.function.Supplier;
+import java.util.function.*;
 
 public class ReferenceLambda {
     public static void main(String[] args) {
-        Function <Integer,Integer> f=x->x+1;
-        Function <Integer,Integer> g=x->x*2;
-        Function<Integer,Integer> h=f.andThen(g);
-        // 先计算f然后再去计算g
-        int result=h.apply(12);
-        System.out.println(result);
-        Function<Integer,Integer> r=f.compose(g);
-        //先计算g再去计算f
-        result=r.apply(12);
-        System.out.println(result);
 
         List<String> list= Arrays.asList("zjj","zjj","zjj","zjj","zjj","xjj");
         BiPredicate<List<String>,String> contains=(inventory,element)->inventory.contains(element);
@@ -59,9 +46,40 @@ public class ReferenceLambda {
                 .reversed()
                 .thenComparing(Apple::getColor));
         System.out.println(inventory);
-
+//        List<Apple> redApple=filter(inventory,(Apple apple)->apple.getColor().equals("red"));
         //谓词复合
+        Predicate<Apple> redApple=(Apple apple)->apple.getColor().equals("red");
+        //注意 negate(）是Predicate的默认方法
+        Predicate<Apple> notRedApple= redApple.negate();
+        List<Apple> notRedAppleList=filter(inventory,notRedApple);
+        System.out.println(notRedAppleList);
+        //函数的复合
+        Function <Integer,Integer> f=x->x+1;
+        Function <Integer,Integer> g=x->x*2;
+        Function<Integer,Integer> h=f.andThen(g);
+        // 先计算f然后再去计算g
+        int result=h.apply(12);
+        System.out.println(result);
+        Function<Integer,Integer> r=f.compose(g);
+        //先计算g再去计算f
+        result=r.apply(12);
+        System.out.println(result);
 
+        Function<String,String> addHeader=Letter::addHeader;
+        Function<String,String> transformationPipeline=addHeader
+                .andThen(Letter::checkSpelling)
+                .andThen(Letter::addFooter);
+
+    }
+
+    public static List<Apple> filter (List<Apple> a,Predicate<Apple> p){
+        List<Apple> result=new ArrayList<>();
+        for(Apple apple:a){
+        if(p.test(apple)){
+            result.add(apple);
+        }
+        }
+        return result;
     }
     public static List<Apple> map(List<Integer> list, Function<Integer,Apple> f){
         List<Apple> result=new ArrayList<>();
@@ -70,7 +88,5 @@ public class ReferenceLambda {
         }
         return result;
     }
-
-
 
 }
